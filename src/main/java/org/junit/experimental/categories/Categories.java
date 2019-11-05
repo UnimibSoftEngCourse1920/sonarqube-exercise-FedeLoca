@@ -224,27 +224,21 @@ public class Categories extends Suite {
                 return included.isEmpty();
             }
 
-            if (!excluded.isEmpty()) {
-                if (excludedAny) {
-                    if (matchesAnyParentCategories(childCategories, excluded)) {
-                        return false;
-                    }
-                } else {
-                    if (matchesAllParentCategories(childCategories, excluded)) {
-                        return false;
-                    }
-                }
+            if (!excluded.isEmpty() && excludedAny && matchesAnyParentCategories(childCategories, excluded)) {
+                return false;
+            } 
+            else if (matchesAllParentCategories(childCategories, excluded)) {
+                return false;
             }
 
             if (included.isEmpty()) {
                 // Couldn't be excluded, and with no suite's included categories treated as should run.
                 return true;
-            } else {
-                if (includedAny) {
+            } 
+            else if (includedAny) {
                     return matchesAnyParentCategories(childCategories, included);
-                } else {
+            } else {
                     return matchesAllParentCategories(childCategories, included);
-                }
             }
         }
 
